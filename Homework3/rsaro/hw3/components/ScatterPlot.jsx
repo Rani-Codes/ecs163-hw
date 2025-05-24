@@ -29,6 +29,33 @@ export default function ScatterPlot({ data, width = 800, height = 400 }) {
       .domain([0, d3.max(data, d => +d.anxiety) + 1])
       .range([innerHeight, 0]);
 
+    // Define brush
+    const brush = d3.brush()
+      .extent([[0, 0], [innerWidth, innerHeight]])
+      .on("brush end", brushed);
+
+    svg.append("g")
+      .attr("class", "brush")
+      .call(brush);
+
+  function brushed(event) {
+    let brushedIDs = []; // Default to an empty array
+
+    if (event.selection) {
+      const [[x0, y0], [x1, y1]] = event.selection;
+
+      const brushedPoints = data.filter(d => {
+        const cx = x(+d.hours);
+        const cy = y(+d.anxiety);
+        return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
+      });
+      brushedIDs = brushedPoints.map(d => d.id);
+    }
+
+    const brushEvent = new CustomEvent("brushScatter", { detail: brushedIDs });
+    window.dispatchEvent(brushEvent);
+  }
+
     svg.append("g")
       .attr("transform", `translate(0, ${innerHeight})`)
       .call(d3.axisBottom(x));
@@ -95,11 +122,17 @@ export default function ScatterPlot({ data, width = 800, height = 400 }) {
       .text("Anxiety Score");
 
   }, [data, width, height]);
-
   return (
-    <div className="relative flex justify-center">
-      <svg ref={svgRef}></svg>
-      <div ref={tooltipRef}></div>
+    <div className="flex flex-col items-center">
+      <p className="text-sm text-center mb-2">
+        <span className="text-red-500">*</span> Select part of the scatterplot to update the parallel plot <span className="text-red-500">*</span>
+      </p>
+
+      <div className="relative">
+        <svg ref={svgRef}></svg>
+        <div ref={tooltipRef}></div>
+      </div>
+      
     </div>
   );
 }
