@@ -2,8 +2,8 @@ import "./globals.css";
 
 
 export const metadata = {
-  title: "Hw2",
-  description: "ECS 163 Homework 2 project",
+  title: "Hw3",
+  description: "ECS 163 Homework 3 project",
 };
 
 export default function RootLayout({ children }) {

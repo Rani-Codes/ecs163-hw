@@ -63,7 +63,7 @@ export default function Home() {
     <h1 className="text-2xl font-bold mb-4 text-center">Music & Mental Health Dashboard</h1>
 
     <div className="flex flex-col justify-center">
-      <div className="flex flex-col gap-4">
+      <div className="flex justify-evenly gap-4 mb-10">
         <BarChart data={genreData} width={600} height={300} />
         <ScatterPlot data={scatterData} width={400} height={300} />
       </div>

@@ -121,12 +121,13 @@ export default function ParallelPlot({ data, width = 1000, height = 500 }) {
     <div className="relative inline-block">
       <svg ref={svgRef}></svg>
       <div ref={tooltipRef}></div>
-      <ul>
-        <li>Spotify</li>
-        <li>Youtube Music</li>
-        <li>I do not use a streaming service.</li>
-        <li>Pandora</li>
-        <li>Apple Music</li>
+      <ul className="flex gap-4 justify-center">
+        <li className="bg-blue-500 px-4 py-2 rounded">Spotify</li>
+        <li className="bg-green-500 px-4 py-2 rounded">Youtube Music</li>
+        <li className="bg-orange-500 px-4 py-2 rounded">Pandora</li>
+        <li className="bg-purple-500 px-4 py-2 rounded">Apple Music</li>
+        <li className="bg-orange-800 px-4 py-2 rounded">Other streaming service</li>
+        <li className="bg-red-500 px-4 py-2 rounded">I do not use a streaming service.</li>
       </ul>
     </div>
   );
